@@ -70,7 +70,7 @@ public class KeyActivity extends AppCompatActivity {
                 AlertDialog.Builder builder = null;
                 builder = new AlertDialog.Builder(this);
                 builder.setTitle("使用條款")
-                        .setMessage("『呷好米』APP僅提供您快速查詢行政院農委會提供之市售包裝米之檢驗結果，不會收集您的任何個人資料，敬請安心使用")
+                        .setMessage("『呷好米』APP 僅提供您快速查詢行政院農委會提供之市售包裝米之檢驗結果，不會蒐集您的任何個人資料，敬請安心使用。若使用上有任何意見，歡迎來信指教 goodrice.service@gmail.com")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -81,7 +81,7 @@ public class KeyActivity extends AppCompatActivity {
                 AlertDialog.Builder builder2 = null;
                 builder2 = new AlertDialog.Builder(this);
                 builder2.setTitle("版權宣告")
-                        .setMessage("『呷好米』APP為 陳彥伃、蔡鴻淇、黃湧崑 於 2018年健行科技大學推廣教育中心-Android程式設計班，共同創作完成之成果。")
+                        .setMessage("『呷好米』APP 為 陳彥伃、蔡鴻淇、黃湧崑 於 2018年健行科技大學推廣教育中心-Android程式設計班，共同創作完成之成果。本APP僅為學習成果展現，無任何商業之運用。")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -92,7 +92,7 @@ public class KeyActivity extends AppCompatActivity {
                 AlertDialog.Builder builder3 = null;
                 builder3 = new AlertDialog.Builder(this);
                 builder3.setTitle("免責聲明")
-                        .setMessage("『呷好米』APP所提供之資料皆自『行政院農業委員會資料開放平台』取得，市售包裝米之檢驗結果與品質皆與本APP無關。若對資料內容有任何疑義，請以農委會資料開放平台網站為準。")
+                        .setMessage("『呷好米』APP 所提供之資料皆自『行政院農業委員會資料開放平台』取得，市售包裝米之檢驗結果與品質，本APP將不負任何相關之責任。若對資料內容有任何疑義，請以農委會資料開放平台網站為準。")
                         .setNegativeButton("取消", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
