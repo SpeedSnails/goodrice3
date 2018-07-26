@@ -4,8 +4,10 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -18,18 +20,30 @@ import android.widget.Toast;
 
 import com.goodrice.zxinglib.CaptureActivity;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+
 public class KeyActivity extends AppCompatActivity {
     private Button btnScan, btnOk;
-    private TextView tvBarcode, tvProduct, tvCompany;
+    private TextView tvBarcode, tvProduct, tvCompany,tvResult;
     private ImageView imgResult;
     private EditText edtSearch;
+    public String resultString;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key);
+        initView();
 
-        btnScan=(Button)findViewById(R.id.btnScan);
         btnScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -38,21 +52,101 @@ public class KeyActivity extends AppCompatActivity {
             }
         });
 
-        btnOk = (Button)findViewById(R.id.btnOk);
-        edtSearch = (EditText)findViewById(R.id.edtSearch);
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String resultString = edtSearch.getText().toString().trim();　
+                resultString = edtSearch.getText().toString().trim();
                 if (resultString.equals("")) {
                     Toast.makeText(KeyActivity.this, "請輸入條碼數字", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
                     Toast.makeText(KeyActivity.this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
+                    new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+                    edtSearch.setText("");
+                    imgResult.setImageResource(R.mipmap.logo);
+
                 }
                 
             }
         });
+    }
+    class TransTask extends AsyncTask<String, Void, String>{
+
+        @Override
+        protected String doInBackground(String... params) {
+            StringBuilder sb = new StringBuilder();
+            try{
+                URL url = new URL(params[0]);
+                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
+                String line = in.readLine();
+                while (line != null){
+                    sb.append(line);
+                    line = in.readLine();
+                }
+            }catch (MalformedURLException e){
+                e.printStackTrace();
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+            String s = sb.toString();
+            return s;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            parseJSON(s);
+        }
+    }
+    public void parseJSON(String s){
+        ArrayList<Transaction> trans = new ArrayList<>();
+        try{
+            JSONArray array = new JSONArray(s);
+            for (int i=0;i<array.length();i++){
+                JSONObject obj = array.getJSONObject(i);
+                String phase = obj.getString("phase");
+                String barcode = obj.getString("barcode");
+                String product = obj.getString("product");
+                String company = obj.getString("company");
+                String result = obj.getString("result");
+                Log.d("JSON:", phase + "/" + barcode + "/" + product + "/" + company + "/" + result);
+                Transaction t = new Transaction(phase, barcode, product, company, result);
+                trans.add(t);
+                Log.e("TESTONE","TEST"+String.valueOf(i));
+
+                if (trans.get(i).getBarcode().equals(resultString)){
+                    tvBarcode.setText(trans.get(i).getBarcode());
+                    tvProduct.setText(trans.get(i).getProduct());
+                    tvCompany.setText(trans.get(i).getCompany());
+                    tvResult.setText(trans.get(i).getResult());
+                    if(tvResult.getText().equals("不合格")){
+                        imgResult.setImageResource(R.mipmap.failed);
+                    }else{
+                        imgResult.setImageResource(R.mipmap.pass);
+                    }
+                    Log.e("TESTTWO",trans.get(i).getProduct());
+
+                    break;
+                }else{
+                    tvBarcode.setText("查無資料");
+                    tvProduct.setText("");
+                    tvCompany.setText("");
+                    tvResult.setText("");
+                }
+            }
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+    }
+    public void initView(){
+        tvBarcode = findViewById(R.id.tvBarcode);
+        tvProduct = findViewById(R.id.tvProduct);
+        tvCompany = findViewById(R.id.tvCompany);
+        tvResult = findViewById(R.id.tvResult);
+        imgResult = findViewById(R.id.imgResult);
+        btnOk = findViewById(R.id.btnOk);
+        edtSearch = findViewById(R.id.edtSearch);
+        btnScan = findViewById(R.id.btnScan);
     }
 
     @Override
@@ -61,8 +155,10 @@ public class KeyActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode==1001 && resultCode== Activity.RESULT_OK)
         {
-            String result=data.getStringExtra(CaptureActivity.KEY_DATA);
-            Toast.makeText(this, "qrcode result is "+result, Toast.LENGTH_SHORT).show();
+            resultString=data.getStringExtra(CaptureActivity.KEY_DATA);
+            Toast.makeText(this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
+            new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+
         }
     }
 

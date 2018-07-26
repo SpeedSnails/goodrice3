@@ -27,14 +27,17 @@
         android:id="@+id/edtSearch"
         android:layout_width="0dp"
         android:layout_height="60dp"
+        android:layout_marginEnd="8dp"
         android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
-        android:ems="10"
-        android:gravity="end"
+        android:gravity="center"
         android:hint="@string/hint"
         android:inputType="number"
+        android:singleLine="true"
+        app:layout_constraintEnd_toStartOf="@+id/btnOk"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvHistory" />
 
@@ -43,16 +46,12 @@
         android:layout_width="100dp"
         android:layout_height="60dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginRight="16dp"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_weight="1"
         android:background="@mipmap/ok"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toEndOf="@+id/edtSearch"
         app:layout_constraintTop_toBottomOf="@+id/tvHistory" />
 
     <TextView
@@ -94,6 +93,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
             android:text="@string/textview1"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -123,6 +123,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
             android:text="@string/textview2"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -155,6 +156,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
             android:text="@string/textview3"
             android:textColor="@android:color/black"
             android:textSize="18sp" />
@@ -187,9 +189,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:singleLine="true"
             android:text="@string/textview"
             android:textColor="@android:color/black"
-            android:textSize="14sp" />
+            android:textSize="18sp" />
 
 
     </LinearLayout>
@@ -209,7 +212,7 @@
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/imgResult"
         android:layout_width="251dp"
         android:layout_height="162dp"
         android:layout_marginEnd="8dp"
@@ -221,8 +224,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
-        app:srcCompat="@mipmap/pass" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
 
 </android.support.constraint.ConstraintLayout>
