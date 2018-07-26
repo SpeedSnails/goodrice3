@@ -43,7 +43,7 @@ public class KeyActivity extends AppCompatActivity {
         btnOk.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String resultString = edtSearch.getText().toString().trim();
+                String resultString = edtSearch.getText().toString().trim();　
                 if (resultString.equals("")) {
                     Toast.makeText(KeyActivity.this, "請輸入條碼數字", Toast.LENGTH_SHORT).show();
                     return;
