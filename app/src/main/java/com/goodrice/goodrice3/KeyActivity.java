@@ -31,6 +31,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+import javax.net.ssl.HttpsURLConnection;
+
 public class KeyActivity extends AppCompatActivity {
     private Button btnScan, btnOk;
     private TextView tvBarcode, tvProduct, tvCompany,tvResult;
@@ -74,14 +76,16 @@ public class KeyActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
+
             StringBuilder sb = new StringBuilder();
+            BufferedReader reader = null;
             try{
                 URL url = new URL(params[0]);
-                BufferedReader in = new BufferedReader(new InputStreamReader(url.openStream()));
-                String line = in.readLine();
+                reader = new BufferedReader(new InputStreamReader(url.openStream()));
+                String line = reader.readLine();
                 while (line != null){
                     sb.append(line);
-                    line = in.readLine();
+                    line = reader.readLine();
                 }
             }catch (MalformedURLException e){
                 e.printStackTrace();
