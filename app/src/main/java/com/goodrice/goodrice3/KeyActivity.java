@@ -7,11 +7,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -62,10 +64,14 @@ public class KeyActivity extends AppCompatActivity {
                     Toast.makeText(KeyActivity.this, "請輸入條碼數字", Toast.LENGTH_SHORT).show();
                     return;
                 } else {
-                    Toast.makeText(KeyActivity.this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
-                    new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+                    Toast.makeText(KeyActivity.this, "輸入的數字為 "+resultString, Toast.LENGTH_SHORT).show();
+                    new TransTask().execute("https://qar3yghz7uxscjkmkzp8rg-on.drv.tw/goodrice.json");
                     edtSearch.setText("");
-                    imgResult.setImageResource(R.mipmap.logo);
+                    edtSearch.clearFocus();
+                    InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+
+                    imm.hideSoftInputFromWindow(KeyActivity.this.getCurrentFocus().getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+
 
                 }
                 
@@ -136,6 +142,8 @@ public class KeyActivity extends AppCompatActivity {
                     tvProduct.setText("");
                     tvCompany.setText("");
                     tvResult.setText("");
+                    imgResult.setImageResource(R.mipmap.logo);
+
                 }
             }
         }catch (JSONException e){
@@ -160,8 +168,8 @@ public class KeyActivity extends AppCompatActivity {
         if(requestCode==1001 && resultCode== Activity.RESULT_OK)
         {
             resultString=data.getStringExtra(CaptureActivity.KEY_DATA);
-            Toast.makeText(this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
-            new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+            Toast.makeText(this, "輸入的數字為 "+resultString, Toast.LENGTH_SHORT).show();
+            new TransTask().execute("https://qar3yghz7uxscjkmkzp8rg-on.drv.tw/goodrice.json");
 
         }
     }
