@@ -3,14 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/classroom"
-        android:title="@string/classroom"
-        app:showAsAction="never" />
-    <item
-        android:id="@+id/setting"
-        android:title="@string/setting"
-        app:showAsAction="never" />
-    <item
         android:id="@+id/privacy"
         android:title="@string/privacy"
         app:showAsAction="never" />

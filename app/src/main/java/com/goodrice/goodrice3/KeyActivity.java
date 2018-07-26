@@ -12,17 +12,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goodrice.zxinglib.CaptureActivity;
-import com.goodrice.zxinglib.BeepManager;
 
 public class KeyActivity extends AppCompatActivity {
-    private Button btnScan, btnHistory, btnOk;
-    private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btnClear, btnBack;
-    private TextView textView;
-    private BeepManager beepManager;
+    private Button btnScan, btnOk;
+    private TextView tvBarcode, tvProduct, tvCompany;
+    private ImageView imgResult;
     private EditText edtSearch;
 
     @Override
@@ -39,15 +38,6 @@ public class KeyActivity extends AppCompatActivity {
             }
         });
 
-        btnHistory=(Button)findViewById(R.id.btnHistory);
-        btnHistory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent=new Intent(KeyActivity.this,HistoryActivity.class);
-                startActivity(intent);
-            }
-
-        });
         btnOk = (Button)findViewById(R.id.btnOk);
         edtSearch = (EditText)findViewById(R.id.edtSearch);
         btnOk.setOnClickListener(new View.OnClickListener() {
@@ -63,6 +53,7 @@ public class KeyActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data)
     {
@@ -73,6 +64,7 @@ public class KeyActivity extends AppCompatActivity {
             Toast.makeText(this, "qrcode result is "+result, Toast.LENGTH_SHORT).show();
         }
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -116,8 +108,6 @@ public class KeyActivity extends AppCompatActivity {
                             }
                         }).show();
                 break;
-
-
         }
         return super.onOptionsItemSelected(item);
     }

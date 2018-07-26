@@ -20,18 +20,6 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:label="呷好米"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
-            android:name=".HistoryActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:label="呷好米"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysHidden" />
-        <activity
             android:name=".KeyActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="呷好米"
