@@ -63,45 +63,45 @@ public class KeyActivity extends AppCompatActivity {
                     return;
                 } else {
                     Toast.makeText(KeyActivity.this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
-                    new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+                    //new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+                    parseJSON(s);
                     edtSearch.setText("");
-                    imgResult.setImageResource(R.mipmap.logo);
 
                 }
                 
             }
         });
     }
-    class TransTask extends AsyncTask<String, Void, String>{
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            StringBuilder sb = new StringBuilder();
-            BufferedReader reader = null;
-            try{
-                URL url = new URL(params[0]);
-                reader = new BufferedReader(new InputStreamReader(url.openStream()));
-                String line = reader.readLine();
-                while (line != null){
-                    sb.append(line);
-                    line = reader.readLine();
-                }
-            }catch (MalformedURLException e){
-                e.printStackTrace();
-            }catch (IOException e){
-                e.printStackTrace();
-            }
-            String s = sb.toString();
-            return s;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            parseJSON(s);
-        }
-    }
+//    class TransTask extends AsyncTask<String, Void, String>{
+//
+//        @Override
+//        protected String doInBackground(String... params) {
+//
+//            StringBuilder sb = new StringBuilder();
+//            BufferedReader reader = null;
+//            try{
+//                URL url = new URL(params[0]);
+//                reader = new BufferedReader(new InputStreamReader(url.openStream()));
+//                String line = reader.readLine();
+//                while (line != null){
+//                    sb.append(line);
+//                    line = reader.readLine();
+//                }
+//            }catch (MalformedURLException e){
+//                e.printStackTrace();
+//            }catch (IOException e){
+//                e.printStackTrace();
+//            }
+//            String s = sb.toString();
+//            return s;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            parseJSON(s);
+//        }
+//    }
     public void parseJSON(String s){
         ArrayList<Transaction> trans = new ArrayList<>();
         try{
@@ -116,7 +116,7 @@ public class KeyActivity extends AppCompatActivity {
                 Log.d("JSON:", phase + "/" + barcode + "/" + product + "/" + company + "/" + result);
                 Transaction t = new Transaction(phase, barcode, product, company, result);
                 trans.add(t);
-                Log.e("TESTONE","TEST"+String.valueOf(i));
+                Log.e("TESTONE","TEST "+String.valueOf(i));
 
                 if (trans.get(i).getBarcode().equals(resultString)){
                     tvBarcode.setText(trans.get(i).getBarcode());
@@ -136,6 +136,8 @@ public class KeyActivity extends AppCompatActivity {
                     tvProduct.setText("");
                     tvCompany.setText("");
                     tvResult.setText("");
+                    imgResult.setImageResource(R.mipmap.logo);
+
                 }
             }
         }catch (JSONException e){
@@ -161,8 +163,8 @@ public class KeyActivity extends AppCompatActivity {
         {
             resultString=data.getStringExtra(CaptureActivity.KEY_DATA);
             Toast.makeText(this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
-            new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
-
+            //new TransTask().execute("https://2018goodrice.000webhostapp.com/goodrice.json");
+            parseJSON(s);
         }
     }
 
@@ -212,4 +214,10 @@ public class KeyActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+    public String s = "[\n" +
+            "{\"phase\":\"103年11月\",\"barcode\":\"3191163\",\"product\":\"菱鄉米\",\"company\":\"友善大地社會企業有限公司\",\"result\":\"不合格\"},\n" +
+            "{\"phase\":\"103年11月\",\"barcode\":\"4710265030280\",\"product\":\"在地米(5斤)\",\"company\":\"花東商業股份有限公司\",\"result\":\"不合格\"},\n" +
+            "{\"phase\":\"105年04月\",\"barcode\":\"20500863\",\"product\":\"良友牌長壽米\",\"company\":\"良友碾米工廠\",\"result\":\"合格\"},\n" +
+            "{\"phase\":\"105年04月\",\"barcode\":\"20500870\",\"product\":\"良友牌宜蘭米\",\"company\":\"良友碾米工廠\",\"result\":\"合格\"}\n" +
+            "]";
 }
