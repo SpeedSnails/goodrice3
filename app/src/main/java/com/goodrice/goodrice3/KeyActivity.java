@@ -50,6 +50,7 @@ public class KeyActivity extends AppCompatActivity {
                 } else {
                     Toast.makeText(KeyActivity.this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
                 }
+                
             }
         });
     }
