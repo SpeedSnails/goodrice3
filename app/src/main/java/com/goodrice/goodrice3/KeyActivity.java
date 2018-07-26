@@ -29,6 +29,7 @@ public class KeyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_key);
+        setTitle("手動輸入");
 
         btnScan=(Button)findViewById(R.id.btnScan);
         btnScan.setOnClickListener(new View.OnClickListener() {
