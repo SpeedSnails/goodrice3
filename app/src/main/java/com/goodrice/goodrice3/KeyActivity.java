@@ -11,15 +11,19 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.goodrice.zxinglib.CaptureActivity;
+import com.goodrice.zxinglib.BeepManager;
 
 public class KeyActivity extends AppCompatActivity {
-    private Button btnScan, btnHistory;
+    private Button btnScan, btnHistory, btnOk;
     private Button btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9, btn0, btnClear, btnBack;
     private TextView textView;
+    private BeepManager beepManager;
+    private EditText edtSearch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +47,20 @@ public class KeyActivity extends AppCompatActivity {
                 startActivity(intent);
             }
 
+        });
+        btnOk = (Button)findViewById(R.id.btnOk);
+        edtSearch = (EditText)findViewById(R.id.edtSearch);
+        btnOk.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String resultString = edtSearch.getText().toString().trim();
+                if (resultString.equals("")) {
+                    Toast.makeText(KeyActivity.this, "請輸入條碼數字", Toast.LENGTH_SHORT).show();
+                    return;
+                } else {
+                    Toast.makeText(KeyActivity.this, "qrcode result is "+resultString, Toast.LENGTH_SHORT).show();
+                }
+            }
         });
     }
     @Override
